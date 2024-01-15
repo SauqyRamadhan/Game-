@@ -1,0 +1,51 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.gamee;
+
+/**
+ *
+ * @author ASUS
+ */
+public class Player {
+    // Atribut
+    String name;
+    int speed, healthPoints;
+
+    // Method
+    void run() {
+        System.out.println(name + " is Running ...");
+        System.out.println("Speed: " + speed);
+    }
+
+    boolean isDead() {
+        return healthPoints <= 0;
+    }
+
+    void attack(Player target, int damage) {
+        System.out.println(name + " is attacking " + target.name + " with damage: " + damage);
+        target.receiveDamage(damage);
+    }
+
+    void defense(int block) {
+        System.out.println(name + " is defending with a block of " + block);
+        // Mengurangi jumlah kerusakan yang akan diterima sesuai dengan nilai block
+        healthPoints -= block;
+        
+        if (isDead()) {
+            System.out.println(name + " has been defeated!");
+        } else {
+            System.out.println(name + "'s health is now: " + healthPoints);
+        }
+    }
+
+    void receiveDamage(int damage) {
+        healthPoints -= damage;
+        if (isDead()) {
+            System.out.println(name + " has been defeated!");
+        } else {
+            System.out.println(name + "'s health is now: " + healthPoints);
+        }
+    }
+}
