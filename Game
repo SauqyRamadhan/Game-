@@ -1,0 +1,41 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.gamee;
+
+/**
+ *
+ * @author ASUS
+ */
+public class Gamee {
+
+    public static void main(String[] args) {
+        // Buat objek villain
+        Player villain = new Player();
+        villain.name = "laed";
+        villain.speed = 200;
+        villain.healthPoints = 100000;
+
+        // Jalankan metode run untuk villain
+        villain.run();
+
+        // Serang villain dengan hero
+        villain.attack(villain, 50);
+
+        // Pertahanan villain terhadap serangan hero
+        villain.defense(20);
+
+        // Periksa apakah villain sudah mati
+        if (villain.isDead()) {
+            System.out.println(villain.name + " has been defeated!");
+        } else {
+            System.out.println(villain.name + "'s health is now: " + villain.healthPoints);
+        }
+
+        // Game Over jika villain mati
+        if (villain.isDead()) {
+            System.out.println("Game Over");
+        }
+    }
+}
