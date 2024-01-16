@@ -1,41 +1,87 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.gamee;
 
-/**
- *
- * @author ASUS
- */
+import java.util.Random;
+
 public class Gamee {
 
     public static void main(String[] args) {
-        // Buat objek villain
+        // Create a villain object
         Player villain = new Player();
-        villain.name = "laed";
+        villain.name = "Evil Villain";
         villain.speed = 200;
-        villain.healthPoints = 100000;
+        villain.healthPoints = 150;
 
-        // Jalankan metode run untuk villain
-        villain.run();
+        // Create a hero object
+        Player hero = new Player();
+        hero.name = "SuperHero";
+        hero.speed = 150;
+        hero.healthPoints = 120;
 
-        // Serang villain dengan hero
-        villain.attack(villain, 50);
+        // Game loop
+        while (true) {
+            // Display player status
+            displayPlayerStatus(hero);
+            displayPlayerStatus(villain);
 
-        // Pertahanan villain terhadap serangan hero
-        villain.defense(20);
+            // Random event
+            handleRandomEvent(hero, villain);
 
-        // Periksa apakah villain sudah mati
-        if (villain.isDead()) {
-            System.out.println(villain.name + " has been defeated!");
-        } else {
-            System.out.println(villain.name + "'s health is now: " + villain.healthPoints);
-        }
+            // Villain's turn
+            performTurn(villain, hero);
 
-        // Game Over jika villain mati
-        if (villain.isDead()) {
-            System.out.println("Game Over");
+            // Check if hero is defeated
+            if (hero.isDead()) {
+                System.out.println(hero.name + " has been defeated! Villain wins!");
+                break;
+            }
+
+            // Hero's turn
+            performTurn(hero, villain);
+
+            // Check if villain is defeated
+            if (villain.isDead()) {
+                System.out.println(villain.name + " has been defeated! Hero wins!");
+                break;
+            }
         }
     }
+
+    private static void performTurn(Player attacker, Player target) {
+        System.out.println(attacker.name + "'s turn:");
+        attacker.attack(target, generateRandomDamage());
+        if (target.isDead()) {
+            System.out.println(target.name + " has been defeated!");
+        }
+    }
+
+    private static void displayPlayerStatus(Player player) {
+        System.out.println(player.name + "'s status - Health: " + player.healthPoints);
+    }
+
+    private static void handleRandomEvent(Player hero, Player villain) {
+        Random random = new Random();
+        int eventChance = random.nextInt(100);
+        if (eventChance < 10) {
+            // 10% chance of a special event
+            System.out.println("Special event occurred!");
+
+            // Example: Randomly heal or damage a player
+            int eventOutcome = random.nextInt(2);
+            if (eventOutcome == 0) {
+                int healAmount = random.nextInt(20) + 10;
+                hero.healthPoints += healAmount;
+                System.out.println(hero.name + " received a healing bonus of " + healAmount + " health points.");
+            } else {
+                int damageAmount = random.nextInt(30) + 10;
+                villain.takeDamage(damageAmount);
+                System.out.println(villain.name + " suffered a random event and lost " + damageAmount + " health points.");
+            }
+        }
+    }
+
+    private static int generateRandomDamage() {
+        Random random = new Random();
+        return random.nextInt(30) + 20; // Adjust this for the damage range
+    }
 }
+
